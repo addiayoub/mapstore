@@ -25,7 +25,6 @@ class ForkPlugin extends React.Component {
     render() {
         return (
             <a href="https://github.com/geosolutions-it/MapStore2">
-                <img className="ms-fork-button" style={{position: "absolute", top: 40, left: 0, border: 0, zIndex: 100}} src={this.props.src} alt="Fork me on GitHub" />
             </a>
         );
     }

@@ -1,16 +1,9 @@
-/*
- * Copyright 2016, GeoSolutions Sas.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree.
- */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import assign from 'object-assign';
 import { DropdownButton, Glyphicon, MenuItem } from 'react-bootstrap';
-
+import Automate from "./Automate.jsx";
 import tooltip from "../components/misc/enhancers/tooltip";
 import ToolsContainer from './containers/ToolsContainer';
 import Message from './locale/Message';
@@ -72,7 +65,6 @@ class BurgerMenu extends React.Component {
         controls: [],
         panelStyle: {
             minWidth: "300px",
-            right: "52px",
             zIndex: 100,
             position: "absolute",
             overflow: "auto"
@@ -80,6 +72,10 @@ class BurgerMenu extends React.Component {
         panelClassName: "toolbar-panel",
         onInit: () => {},
         onDetach: () => {}
+    };
+
+    state = {
+        showAutomate: false
     };
 
     componentDidMount() {
@@ -96,7 +92,6 @@ class BurgerMenu extends React.Component {
         const { onDetach } = this.props;
         onDetach();
     }
-
 
     getPanels = items => {
         return items.filter((item) => item.panel)
@@ -128,7 +123,6 @@ class BurgerMenu extends React.Component {
                 stateSelector: 'burgermenu',
                 eventSelector: 'onSelect',
                 tool: MenuItem,
-                // tool: ({ children: c, ...props }) => <MenuItem componentClass={AnchorElement} {...props} >{c}</MenuItem>,
                 panelStyle: this.props.panelStyle,
                 panelClassName: this.props.panelClassName
             };
@@ -148,6 +142,13 @@ class BurgerMenu extends React.Component {
                         {this.props.title}
                     </span>
             },
+            {
+                element:
+                    <MenuItem key="automate-button" onClick={() => this.setState({ showAutomate: true })}>
+                        <Glyphicon glyph="cog" /> Automate
+                    </MenuItem>,
+                position: 1
+            },
             ...this.props.items.map(item => ({
                 ...item,
                 ...processChildren(item.children)
@@ -157,41 +158,61 @@ class BurgerMenu extends React.Component {
 
     render() {
         return (
-            <ToolsContainer id={this.props.id} className="square-button"
-                container={Container}
-                toolStyle="primary"
-                activeStyle="default"
-                stateSelector="burgermenu"
-                eventSelector="onSelect"
-                tool={({ children: c, ...props }) => <MenuItem componentClass={AnchorElement} {...props} >{c}</MenuItem>}
-                tools={this.getTools()}
-                panels={this.getPanels(this.props.items)}
-                panelStyle={this.props.panelStyle}
-                panelClassName={this.props.panelClassName}
-            />);
+            <>
+                <ToolsContainer id={this.props.id} className="square-button"
+                    container={Container}
+                    toolStyle="primary"
+                    activeStyle="default"
+                    stateSelector="burgermenu"
+                    eventSelector="onSelect"
+                    tool={({ children: c, ...props }) => <MenuItem componentClass={AnchorElement} {...props} >{c}</MenuItem>}
+                    tools={this.getTools()}
+                    panels={this.getPanels(this.props.items)}
+                    panelStyle={this.props.panelStyle}
+                    panelClassName={this.props.panelClassName}
+                />
+                {this.state.showAutomate && (
+                    <>
+                        <div style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                            backdropFilter: 'blur(5px)',
+                            zIndex: 999
+                        }} />
+                        <div style={{
+                            position: 'absolute',
+                            top: '150px',
+                            right: '350px',
+                            background: 'white',
+                            padding: '15px',
+                            border: '1px solid black',
+                            borderRadius: '10px',
+                            boxShadow: '0 30px 50px rgba(0,0,0,0.2)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            whiteSpace: "nowrap",
+                            animation: "fadeIn 0.9s",
+                            zIndex: 1000
+                        }}>
+                            <span><Automate/></span>
+                            <Glyphicon
+                                glyph="remove"
+                                onClick={() => this.setState({ showAutomate: false })}
+                                className="butt"
+                            />
+                        </div>
+                    </>
+                )}
+            </>
+        );
     }
 }
 
-/**
- * Menu button that can contain other plugins entries.
- * Usually rendered inside {@link #plugins.OmniBar|plugins.OmniBar}
- * You can render an item inside burger menu by adding the following to the `containers` entry of your plugin.
- * It is a wrapper for `ToolsContainer` so all the properties of the tools of {@link #plugins.containers.ToolContainer|ToolContainer} can be used here (action, selector ...).
- * ```
- * BurgerMenu: {
- *      name: 'my_entry', // name of your entry
- *      position: 1000, // the position you want
- *      text: <Message msgId="details.title"/>, // the text to show in the menu entry
- *      icon: <Glyphicon glyph="sheet"/>, // the icon to use
- *      // the following are some examples from ToolContainer property
- *      action: openDetailsPanel, // the function to call when the menu entry is clicked
- *      selector: a function that can return some additional properties for the menu entry. Is used typically to hide the menu returning, under certain contdition `{ style: {display: "none"} }`
- *  },
- * ```
- * @name BurgerMenu
- * @class
- * @memberof plugins
- */
 export default createPlugin(
     'BurgerMenu',
     {

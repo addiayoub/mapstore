@@ -1,10 +1,20 @@
 
-.page-maps .ms-home-description {
-    background-image: url('../img/mapstore-header.jpg');
-}
+.imgcid{
+    background-image:url("../img/téléchargement.jpg");
+    background-size: cover;
+color: white;
+opacity: 200%;
+height: 300px;
+width: 100%;
+background-size: cover;
+background-repeat: no-repeat;
+overflow: hidden;
+background-position: center;
+position: relative;
+top: -20px;
 
+}
 .page-maps .mapstore-header {
-    background-image: url('../img/mapstore-header.jpg');
     height: 300px;
     width: 100%;
     background-size: cover;

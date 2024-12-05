@@ -33,7 +33,7 @@ const DEFAULT_STATE = {
     crsSelectedDXF: "EPSG:3857",
     config: {
         chartTitle: "",
-        wpsurl: "/geoserver/wps",
+        wpsurl: "http://localhost:8080/geoserver/wps",
         identifier: "gs:LongitudinalProfile",
         referentials: [],
         distances: LONGITUDINAL_DISTANCES,

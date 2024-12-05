@@ -54,8 +54,8 @@ class StandardAppComponent extends React.Component {
                     {this.state.themeLoaded ? (<Localized messages={this.props.locale.messages} locale={this.props.locale.current} loadingError={this.props.locale.localeError}>
                         <PluginsContainer {...this.props}/>
                     </Localized>) :
-                        (<span><div className="_ms2_init_spinner _ms2_init_center"><div></div></div>
-                            <div className="_ms2_init_text _ms2_init_center">Loading MapStore</div></span>)}
+                        (<span><div className="_ms2_init_spinner _ms2_init_center " ><div></div></div>
+                            <div className="_ms2_init_text _ms2_init_center">Loading CID</div></span>)}
                 </Theme>
                 <Debug/>
             </div>

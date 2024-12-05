@@ -6,31 +6,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 import React from 'react';
-import assign from 'object-assign';
-import PropTypes from 'prop-types';
 
-import src from '../assets/img/mapstorelogo.png';
+import PropTypes from 'prop-types';
+import src from '../assets/img/logo.png';
+import assign from 'object-assign';
 
 class Attribution extends React.Component {
     static propTypes = {
         src: PropTypes.string,
-        href: PropTypes.string,
-        label: PropTypes.string,
-        height: PropTypes.number,
         style: PropTypes.object
     };
 
     static defaultProps = {
-        src: src,
-        height: 30,
-        href: 'https://www.geosolutionsgroup.com/',
-        label: 'GeoSolutions',
-        style: {
-            position: "absolute",
-            width: "124px",
-            left: 0,
-            bottom: 0
-        }
+        src: src
     };
 
     render() {
@@ -43,20 +31,18 @@ class Attribution extends React.Component {
  * @name Attribution
  * @class
  * @memberof plugins
- * @prop {string} [label='GeoSolutions'] the tooltip for the logo
- * @prop {string} [href='https://www.geosolutionsgroup.com/'] the URL to redirect on click
+ * @prop {string} [label='Conseil Ingénierie et développement'] the tooltip for the logo
+ * @prop {string} [href='http://cid.co.ma/'] the URL to redirect on click
  * @prop {string} [src] URL of the logo image. By default the GeoSolutions logo.
- * @prop {number} [height] the height of the img tag, default is 30
- * @prop {object} [style] a style object to pass to the img
  */
 export default {
     AttributionPlugin: assign(Attribution, {
         NavMenu: {
             tool: (props) => ({
                 position: 0,
-                label: props.label || 'GeoSolutions',
-                href: props.href || 'https://www.geosolutionsgroup.com/',
-                img: <img className="customer-logo" alt={props.label} src={props.src || src} height={props.height || "30"} style={props.style || {}}/>,
+                label: props.label || 'Conseil Ingénierie et développement',
+                href: props.href || 'http://cid.co.ma/',
+                img: props.src && <img className="customer-logo" src={props.src} height="30" /> || <img className="customer-logo" src={src} height="30" />,
                 logo: true
             })
         }
